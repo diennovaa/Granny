@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://vygrdukbpmpq"]
+
+[ext_resource type="PackedScene" uid="uid://c131uwpthf2ib" path="res://Model/Hospital/hospital_hall.glb" id="1_yj7fa"]
+
+[node name="Sketchfab_Scene" instance=ExtResource("1_yj7fa")]
