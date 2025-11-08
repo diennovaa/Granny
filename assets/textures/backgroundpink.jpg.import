@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cyl7lkx0o2i01"
-path.s3tc="res://.godot/imported/texture_05.png-fc818d3f2c3ac681a210534b35ad90a3.s3tc.ctex"
+uid="uid://b5251tes6fnby"
+path.s3tc="res://.godot/imported/backgroundpink.jpg-cc6884e3725d99c394d0ef1df9ab8675.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://assets/textures/dev/grids/Orange/texture_05.png"
-dest_files=["res://.godot/imported/texture_05.png-fc818d3f2c3ac681a210534b35ad90a3.s3tc.ctex"]
+source_file="res://assets/textures/backgroundpink.jpg"
+dest_files=["res://.godot/imported/backgroundpink.jpg-cc6884e3725d99c394d0ef1df9ab8675.s3tc.ctex"]
 
 [params]
 
