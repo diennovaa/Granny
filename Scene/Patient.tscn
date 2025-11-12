@@ -6,15 +6,16 @@
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_mhqvh"]
 
-[node name="Node3D" type="Node3D"]
-
-[node name="Patient" type="CharacterBody3D" parent="."]
+[node name="Node3D" type="CharacterBody3D"]
 script = ExtResource("1_mhqvh")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Patient"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_w6wah")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Patient"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 mesh = SubResource("CapsuleMesh_mhqvh")
+skeleton = NodePath("")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
