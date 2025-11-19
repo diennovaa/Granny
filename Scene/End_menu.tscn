@@ -1,11 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://b2eryt8iq8gy4"]
+[gd_scene load_steps=9 format=3 uid="uid://cv7kt530cx1t0"]
 
-[ext_resource type="Script" uid="uid://c8oxrleooj7a8" path="res://script/main_menu.gd" id="1_hii65"]
-[ext_resource type="Texture2D" uid="uid://b5251tes6fnby" path="res://assets/textures/backgroundpink.jpg" id="2_kqsxi"]
-[ext_resource type="FontFile" uid="uid://vf1s7pbsf3p1" path="res://assets/Font/Death Bones.ttf" id="3_pvidh"]
+[ext_resource type="Script" uid="uid://c8oxrleooj7a8" path="res://script/main_menu.gd" id="1_x4o4p"]
+[ext_resource type="Texture2D" uid="uid://b5251tes6fnby" path="res://assets/textures/backgroundpink.jpg" id="2_ijuen"]
+[ext_resource type="FontFile" uid="uid://vf1s7pbsf3p1" path="res://assets/Font/Death Bones.ttf" id="3_clb6d"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_jix8l"]
-texture = ExtResource("2_kqsxi")
+texture = ExtResource("2_ijuen")
 modulate_color = Color(0.34407577, 0.34407574, 0.34407574, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rhts7"]
@@ -43,7 +43,7 @@ offset_top = 2.0
 offset_bottom = 2.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_hii65")
+script = ExtResource("1_x4o4p")
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 1
@@ -56,15 +56,15 @@ theme_override_styles/panel = SubResource("StyleBoxTexture_jix8l")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
-anchors_preset = 8
+anchors_preset = -1
 anchor_left = 0.5
-anchor_top = 0.5
+anchor_top = 0.51100004
 anchor_right = 0.5
-anchor_bottom = 0.5
+anchor_bottom = 0.51100004
 offset_left = -200.0
-offset_top = -53.0
+offset_top = 31.871979
 offset_right = 187.0
-offset_bottom = 142.0
+offset_bottom = 151.87198
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 9
@@ -78,18 +78,7 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_rhts7")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_7vrkn")
 theme_override_styles/hover = SubResource("StyleBoxFlat_fu7sn")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_7vrkn")
-text = "Start game"
-
-[node name="Button2" type="Button" parent="VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_colors/font_color = Color(0.080783166, 0.08078342, 0.080783226, 1)
-theme_override_font_sizes/font_size = 30
-theme_override_styles/normal = SubResource("StyleBoxFlat_rhts7")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_7vrkn")
-theme_override_styles/hover = SubResource("StyleBoxFlat_fu7sn")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_7vrkn")
-text = "How to Play"
+text = "Restart"
 
 [node name="Button3" type="Button" parent="VBoxContainer"]
 layout_mode = 2
@@ -117,9 +106,9 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 0)
 theme_override_constants/shadow_offset_x = 10
-theme_override_fonts/font = ExtResource("3_pvidh")
+theme_override_fonts/font = ExtResource("3_clb6d")
 theme_override_font_sizes/font_size = 86
-text = "Nurse Panick"
+text = "Game Over"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -130,23 +119,19 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.514
 anchor_bottom = 0.527
-offset_left = 440.0
-offset_top = 188.0
-offset_right = 554.872
-offset_bottom = 291.504
+offset_left = -92.0
+offset_top = -76.0
+offset_right = 78.87201
+offset_bottom = -59.496002
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 0)
 theme_override_constants/shadow_offset_x = 10
-theme_override_fonts/font = ExtResource("3_pvidh")
-theme_override_font_sizes/font_size = 20
-text = "Credit by :
-Antonio
-Ara
-Thoriq"
+theme_override_fonts/font = ExtResource("3_clb6d")
+theme_override_font_sizes/font_size = 25
+text = "Pasien Selamat =  ?"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [connection signal="pressed" from="VBoxContainer/Button" to="." method="_on_start_pressed"]
-[connection signal="pressed" from="VBoxContainer/Button2" to="." method="_on_settings_pressed"]
 [connection signal="pressed" from="VBoxContainer/Button3" to="." method="_on_exit_pressed"]
