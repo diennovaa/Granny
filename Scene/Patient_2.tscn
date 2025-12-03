@@ -1,0 +1,166 @@
+[gd_scene load_steps=18 format=3 uid="uid://drdk2amtlfm72"]
+
+[ext_resource type="Script" uid="uid://ofwl0y23ruxe" path="res://script/patient.gd" id="1_mpypf"]
+[ext_resource type="Texture2D" uid="uid://broq4qg2tv1w2" path="res://assets/textures/Bar/BG.png" id="2_k3m6d"]
+[ext_resource type="Texture2D" uid="uid://6h6yokoceuls" path="res://assets/textures/Bar/S.png" id="3_wgphj"]
+[ext_resource type="Script" uid="uid://brdwrh64kl711" path="res://script/Healthbar.gd" id="4_qkyki"]
+[ext_resource type="PackedScene" uid="uid://cxkevvxmvc1lx" path="res://assets/Animation/Kireng.glb" id="5_p33y2"]
+[ext_resource type="AnimationLibrary" uid="uid://cdjnqsa7p1tfp" path="res://assets/Animation/Lara.res" id="6_k3m6d"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_w6wah"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_k3m6d"]
+animation = &"Lara/Idlein"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_wgphj"]
+animation = &"Lara/Walkin"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_qkyki"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_p33y2"]
+advance_mode = 2
+advance_condition = &"walk"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_wq4i0"]
+xfade_time = 0.5
+advance_mode = 2
+advance_condition = &"idle"
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_868md"]
+states/Lara_Idlein/node = SubResource("AnimationNodeAnimation_k3m6d")
+states/Lara_Idlein/position = Vector2(338, 42)
+states/Lara_Walkin/node = SubResource("AnimationNodeAnimation_wgphj")
+states/Lara_Walkin/position = Vector2(656, 154)
+transitions = ["Start", "Lara_Idlein", SubResource("AnimationNodeStateMachineTransition_qkyki"), "Lara_Idlein", "Lara_Walkin", SubResource("AnimationNodeStateMachineTransition_p33y2"), "Lara_Walkin", "Lara_Idlein", SubResource("AnimationNodeStateMachineTransition_wq4i0")]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_eiev2"]
+viewport_path = NodePath("HealthBar3D/HPViewport")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b71q8"]
+resource_local_to_scene = true
+transparency = 1
+shading_mode = 0
+albedo_texture = SubResource("ViewportTexture_eiev2")
+
+[sub_resource type="QuadMesh" id="QuadMesh_eiev2"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_b71q8")
+size = Vector2(0.8, 0.1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_mpypf"]
+
+[node name="Pasien" type="CharacterBody3D" node_paths=PackedStringArray("body_mesh") groups=["pasien"]]
+script = ExtResource("1_mpypf")
+body_mesh = NodePath("Kireng/Armature/GeneralSkeleton/Ch26_Shirt")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_w6wah")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+
+[node name="AnimationTree" type="AnimationTree" parent="." groups=["npc"]]
+root_node = NodePath("../Kireng")
+tree_root = SubResource("AnimationNodeStateMachine_868md")
+anim_player = NodePath("../Kireng/AnimationPlayer")
+parameters/conditions/idle = false
+parameters/conditions/walk = false
+
+[node name="HPTimer" type="Timer" parent="."]
+
+[node name="HealthBar3D" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.3, 0)
+
+[node name="HPViewport" type="SubViewport" parent="HealthBar3D"]
+transparent_bg = true
+size = Vector2i(200, 40)
+
+[node name="HealthBar" type="TextureProgressBar" parent="HealthBar3D/HPViewport"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+value = 50.0
+nine_patch_stretch = true
+texture_under = ExtResource("2_k3m6d")
+texture_progress = ExtResource("3_wgphj")
+script = ExtResource("4_qkyki")
+
+[node name="HealthBarMesh" type="MeshInstance3D" parent="HealthBar3D"]
+mesh = SubResource("QuadMesh_eiev2")
+
+[node name="Kireng" parent="." instance=ExtResource("5_p33y2")]
+transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, 0, 0, 0)
+
+[node name="GeneralSkeleton" parent="Kireng/Armature" index="0"]
+bones/0/position = Vector3(0.03531623, 0.93916506, -0.03148617)
+bones/0/rotation = Quaternion(0.04720138, -0.046962842, -0.013212934, 0.99769336)
+bones/1/rotation = Quaternion(0.12966157, 0.02394033, 0.040808946, 0.9904289)
+bones/2/rotation = Quaternion(0.09057352, 0.011636849, 0.0018928174, 0.99582005)
+bones/3/rotation = Quaternion(0.09049289, 0.01108171, 0.0011805799, 0.9958348)
+bones/4/rotation = Quaternion(0.014671457, -0.006500218, -0.020830201, 0.9996543)
+bones/5/rotation = Quaternion(0.014702553, -0.0066816523, -0.020472936, 0.99966)
+bones/7/rotation = Quaternion(0.50591207, 0.44872415, 0.6248696, -0.39017648)
+bones/8/rotation = Quaternion(0.021576699, 0.853401, -0.48299584, 0.19482312)
+bones/9/rotation = Quaternion(0.2565362, -0.6589304, 0.25653595, 0.6589304)
+bones/10/rotation = Quaternion(0.05763697, 0.77778125, -0.05448053, 0.62351125)
+bones/11/rotation = Quaternion(-0.28850266, 0.63296944, 0.20730934, 0.6878509)
+bones/12/rotation = Quaternion(0.21357709, 0.076649144, 0.011647374, 0.973845)
+bones/13/rotation = Quaternion(0.22752145, 0.091072746, -0.1267271, 0.96118677)
+bones/15/rotation = Quaternion(0.42508498, -0.008253609, -0.06242245, 0.9029608)
+bones/16/rotation = Quaternion(0.6969751, -2.3760211e-07, -0.071423955, 0.71352947)
+bones/17/rotation = Quaternion(0.46208155, 1.0745416e-07, -0.047352675, 0.88557243)
+bones/19/rotation = Quaternion(0.32780084, -0.0062268246, -0.053223513, 0.9432259)
+bones/20/rotation = Quaternion(0.69829524, 8.7886725e-08, -0.07155893, 0.712224)
+bones/21/rotation = Quaternion(0.389324, 8.919626e-08, -0.039896738, 0.92023647)
+bones/23/rotation = Quaternion(0.39454213, -0.0076166354, -0.059561383, 0.9169139)
+bones/24/rotation = Quaternion(0.6917506, -1.3560545e-07, -0.070888385, 0.7186488)
+bones/25/rotation = Quaternion(0.5105802, -1.858431e-07, -0.052322745, 0.8582367)
+bones/27/rotation = Quaternion(0.44882128, -0.008749136, -0.06462772, 0.8912386)
+bones/28/rotation = Quaternion(0.5963998, -1.5772643e-07, -0.0611173, 0.80035746)
+bones/29/rotation = Quaternion(0.5062662, 9.014457e-08, -0.051880516, 0.8608153)
+bones/31/rotation = Quaternion(0.42281803, -0.5096317, -0.6333229, -0.40050316)
+bones/32/rotation = Quaternion(-0.12103641, 0.8598634, -0.46942726, -0.16007291)
+bones/33/rotation = Quaternion(0.14212325, 0.6926768, -0.14212316, 0.69267666)
+bones/34/rotation = Quaternion(0.107050024, -0.609917, -0.030653048, 0.784603)
+bones/35/rotation = Quaternion(-0.22894874, -0.64442486, -0.14870365, 0.7142733)
+bones/36/rotation = Quaternion(0.24007365, -0.085237876, -0.0073894574, 0.96697706)
+bones/37/rotation = Quaternion(0.16374592, -0.074839056, 0.1229278, 0.97594833)
+bones/39/rotation = Quaternion(0.2371553, 0.00041692433, 0.018552935, 0.9712946)
+bones/40/rotation = Quaternion(0.5736559, 3.8562927e-08, 0.046731543, 0.8177624)
+bones/41/rotation = Quaternion(0.5200377, -9.217219e-08, 0.042363565, 0.8530922)
+bones/43/rotation = Quaternion(0.33363536, 0.006250589, 0.046084266, 0.94155437)
+bones/44/rotation = Quaternion(0.5687763, 9.47256e-08, 0.04633376, 0.8211862)
+bones/45/rotation = Quaternion(0.5936691, -6.600171e-08, 0.048361592, 0.80325484)
+bones/47/rotation = Quaternion(0.40187517, 0.0004327413, 0.067403734, 0.9132103)
+bones/48/rotation = Quaternion(0.5640889, -1.6507167e-07, 0.045952022, 0.82443446)
+bones/49/rotation = Quaternion(0.58876264, -1.2144757e-07, 0.047962055, 0.8068818)
+bones/51/rotation = Quaternion(0.45785254, 0.01572573, 0.07343022, 0.88585097)
+bones/52/rotation = Quaternion(0.55877686, -1.00951816e-07, 0.04551932, 0.82806796)
+bones/53/rotation = Quaternion(0.5838895, 1.5530331e-07, 0.04756495, 0.81043863)
+bones/55/rotation = Quaternion(0.17012721, 0.32787213, 0.9226436, -0.110839784)
+bones/56/rotation = Quaternion(-0.032766026, 0.85707617, -0.50658536, 0.08785277)
+bones/57/rotation = Quaternion(-0.017951904, 0.6107636, -0.7907516, 0.03684498)
+bones/58/rotation = Quaternion(1.2204232e-07, 0.97772974, 0.20986798, 9.85582e-08)
+bones/60/rotation = Quaternion(-0.03912601, 0.29649773, 0.95365953, -0.03304305)
+bones/61/rotation = Quaternion(0.038047012, 0.90871394, -0.41062203, -0.064661294)
+bones/62/rotation = Quaternion(0.0053728893, 0.5630268, -0.82640284, -0.005516801)
+bones/63/rotation = Quaternion(8.5610786e-08, 0.9980538, -0.06235931, 2.2390516e-08)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Kireng"]
+libraries = {
+&"Lara": ExtResource("6_k3m6d")
+}
+
+[node name="Sensor_Ambil" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Sensor_Ambil"]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+shape = SubResource("BoxShape3D_mpypf")
+
+[connection signal="body_entered" from="Sensor_Ambil" to="." method="_on_sensor_ambil_body_entered"]
+[connection signal="body_exited" from="Sensor_Ambil" to="." method="_on_sensor_ambil_body_exited"]
+
+[editable path="Kireng"]
